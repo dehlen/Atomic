@@ -1,0 +1,11 @@
+import XCTest
+@testable import Atomic
+
+class LockTestCase: XCTestCase {
+
+    func testMake_WithiOS10OrAbove_ShouldReturnAnUnfairLock() {
+        let lock = Lock.make()
+
+        XCTAssert(lock is Lock.UnfairLock)
+    }
+}
