@@ -15,12 +15,11 @@ jobs:
         uses: SwiftDocOrg/swift-doc@master
         with:
           inputs: "Source"
-          output: "Documentation"
-      - name: Set Documentation permissions
-        run: chmod -R +r Documentation
+          output: "docs/"
+      - run: sudo chmod -R 0755 docs/
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: Documentation
+          FOLDER: docs
