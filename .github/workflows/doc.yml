@@ -16,6 +16,8 @@ jobs:
         with:
           inputs: "Source"
           output: "Documentation"
+      - name: Set Documentation permissions
+        run: chmod -R +r Documentation
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
