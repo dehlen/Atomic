@@ -15,6 +15,10 @@ If you are using Xcode 11 or higher, go to File / Swift Packages / Add Package D
 
 To remove the dependency, select the project and open Swift Packages (which is next to Build Settings). You can add and remove packages from this tab.
 
+## Documentation
+The documentation is automatically generated thanks to [swift-doc](https://github.com/SwiftDocOrg/swift-doc). When a push on master happens a GitHub Action runs to generate the documentation and to deploy it to GitHub Pages.
+You can find the latest version here: https://dehlen.github.io/Atomic
+
 ## Usage
 ```swift
 /// Initialize the variable with the given initial value.
