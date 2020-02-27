@@ -1,6 +1,6 @@
 {
   "hooks": {
-  	"before:init": "jazzy --module Track --swift-build-tool spm --build-tool-arguments -Xswiftc,-swift-version,-Xswiftc,5"
+  	"before:init": "jazzy --module Atomic --swift-build-tool spm --build-tool-arguments -Xswiftc,-swift-version,-Xswiftc,5"
   },
   "git": {
     "requireCleanWorkingDir": false,
