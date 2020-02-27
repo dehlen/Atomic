@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Atomic  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Atomic  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Atomic Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Atomic Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Atomic  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/Atomic.html">Atomic</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Box.html">Box</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Lock.html">Lock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/VarBox.html">VarBox</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='atomic' class='heading'>Atomic</h1>
+
+<p><img src="https://img.shields.io/badge/supports-Swift%20Package%20Manager-green.svg"></p>
+
+<p>This package implements an Atomic class that uses <a href="https://developer.apple.com/documentation/os/1646466-os_unfair_lock_lock">os_unfair_lock</a> (iOS) or <a href="https://pubs.opengroup.org/onlinepubs/007908799/xsh/pthread_mutex_lock.html">pthread_mutex_t</a> (macOS) to provide synchronized access to a variable.</p>
+
+<p>The implementation was extracted from <a href="https://github.com/ReactiveCocoa/ReactiveSwift/blob/master/Sources/Atomic.swift">ReactiveSwift</a>.</p>
+<h2 id='installation' class='heading'>Installation</h2>
+
+<p>Currently only Swift Package Manager is supported. 
+Swift Package Manager is a dependency manager built into Xcode.</p>
+
+<p>If you are using Xcode 11 or higher, go to File / Swift Packages / Add Package Dependency&hellip; and enter package repository URL <a href="https://github.com/dehlen/Atomic.git">https://github.com/dehlen/Atomic.git</a>, then follow the instructions.</p>
+
+<p>To remove the dependency, select the project and open Swift Packages (which is next to Build Settings). You can add and remove packages from this tab.</p>
+<h2 id='documentation' class='heading'>Documentation</h2>
+
+<p>The documentation is generated thanks to <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a>.
+You can find the latest version here: <a href="./Documentation">Documentation</a>.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+<pre class="highlight swift"><code><span class="c1">/// Initialize the variable with the given initial value.</span>
+<span class="kd">private</span> <span class="k">var</span> <span class="nv">myVariable</span><span class="p">:</span> <span class="kt">Atomic</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Atomic</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+
+<span class="c1">/// Atomically get, set or modify the value of the variable.</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">myVariable</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="n">myVariable</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="c1">/// Atomically modifies the variable.</span>
+<span class="c1">///</span>
+<span class="c1">/// - parameters:</span>
+<span class="c1">///   - action: A closure that takes the current value.</span>
+<span class="c1">///</span>
+<span class="c1">/// - returns: The result of the action.</span>
+<span class="n">myVariable</span><span class="o">.</span><span class="n">modify</span> <span class="p">{</span> <span class="n">oldValue</span> <span class="k">in</span> 
+    <span class="k">if</span> <span class="n">oldValue</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">/// Atomically perform an arbitrary action using the current value of the</span>
+<span class="c1">/// variable.</span>
+<span class="c1">///</span>
+<span class="c1">/// - parameters:</span>
+<span class="c1">///   - action: A closure that takes the current value.</span>
+<span class="c1">///</span>
+<span class="c1">/// - returns: The result of the action.</span>
+<span class="n">myVariable</span><span class="o">.</span><span class="n">withValue</span> <span class="p">{</span> <span class="n">currentValue</span> <span class="k">in</span>
+    <span class="k">return</span> <span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="c1">/// Atomically replace the contents of the variable.</span>
+<span class="c1">///</span>
+<span class="c1">/// - parameters:</span>
+<span class="c1">///   - newValue: A new value for the variable.</span>
+<span class="c1">///</span>
+<span class="c1">/// - returns: The old value.</span>
+<span class="k">let</span> <span class="nv">oldValue</span> <span class="o">=</span> <span class="n">myVariable</span><span class="o">.</span><span class="nf">swap</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+</code></pre>
+<h2 id='license' class='heading'>License</h2>
+
+<p>The MIT License</p>
+
+<p>Copyright &copy; 2020 David Ehlen</p>
+
+<p>See LICENSE file</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-02-23)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
