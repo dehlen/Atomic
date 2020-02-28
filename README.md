@@ -1,6 +1,8 @@
 # Atomic
 <img src="https://img.shields.io/badge/supports-Swift%20Package%20Manager-green.svg">
 <img src="./docs/badge.svg">
+<img src="https://img.shields.io/badge/Swift-5-orange">
+<img src="https://img.shields.io/badge/Platforms-iOS | macOS-lightgrey">
 
 This package implements an Atomic class that uses [os_unfair_lock](https://developer.apple.com/documentation/os/1646466-os_unfair_lock_lock) (iOS) or [pthread_mutex_t](https://pubs.opengroup.org/onlinepubs/007908799/xsh/pthread_mutex_lock.html) (macOS) to provide synchronized access to a variable.
 
